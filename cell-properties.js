@@ -33,8 +33,6 @@ let leftAlign = alignment[0];
 let centerAlign = alignment[1];
 let rightAlign = alignment[2];
 
-// let addressBar = document.querySelector('.address-bar');
-
 let activeColorProp = "#d1d8e0";
 let inactiveColorProp = "#ecf0f1";
 
@@ -55,6 +53,8 @@ function decodeRIDCIDFromAddress(address) {
 }
 
 //Attach property listeners
+
+//Font Style Bold of cell
 bold.addEventListener("click", (e) => {
   let address = addressBar.value;
   let [cell, cellProp] = activeCell(address);
@@ -67,6 +67,7 @@ bold.addEventListener("click", (e) => {
 
 });
 
+//Font Style Italic of cell
 italic.addEventListener("click", (e) => {
   let address = addressBar.value;
   let [cell, cellProp] = activeCell(address);
@@ -78,6 +79,7 @@ italic.addEventListener("click", (e) => {
   italic.style.backgroundColor = cellProp.italic ? activeColorProp: inactiveColorProp; // UI Change(2)
 });
 
+//Font Style Underline of cell
 underline.addEventListener("click", (e) => {
   let address = addressBar.value;
   let [cell, cellProp] = activeCell(address);
@@ -85,45 +87,49 @@ underline.addEventListener("click", (e) => {
   //Modification
   cellProp.underline = !cellProp.underline; //data changed
   cell.style.textDecoration = cellProp.underline ? "underline": "none"; // UI Change(1)
-
   underline.style.backgroundColor = cellProp.underline ? activeColorProp: inactiveColorProp; // UI Change(2)
 });
 
+//Font Size of cell
 fontSize.addEventListener("change", (e) => {
   let address = addressBar.value;
   let [cell, cellProp] = activeCell(address);
   cellProp.fontSize = fontSize.value; //data changed
-  cell.style.fontSize = cellProp.fontSize + "px";
-  fontSize.value = cellProp.fontSize;
+  cell.style.fontSize = cellProp.fontSize + "px"; // UI Change(1)
+  fontSize.value = cellProp.fontSize; // UI Change(2)
 });
 
+//Font Family of cell
 fontFamily.addEventListener("change", (e) => {
   let address = addressBar.value;
   let [cell, cellProp] = activeCell(address);
 
   cellProp.fontFamily = fontFamily.value; //data changed
-  cell.style.fontFamily = cellProp.fontFamily;
-  fontFamily.value = cellProp.fontFamily;
+  cell.style.fontFamily = cellProp.fontFamily; // UI Change(1)
+  fontFamily.value = cellProp.fontFamily; // UI Change(2)
 });
 
+//Font color of cell
 fontColor.addEventListener("change", (e) => {
   let address = addressBar.value;
   let [cell, cellProp] = activeCell(address);
 
   cellProp.fontColor = fontColor.value; //data changed
-  cell.style.color = cellProp.fontColor;
-  fontColor.value = cellProp.fontColor;
+  cell.style.color = cellProp.fontColor; // UI Change(1)
+  fontColor.value = cellProp.fontColor; // UI Change(2)
 });
 
+//Background color of cell
 BGColor.addEventListener("change", (e) => {
   let address = addressBar.value;
   let [cell, cellProp] = activeCell(address);
 
   cellProp.BGColor = BGColor.value; //data changed
-  cell.style.backgroundColor = cellProp.BGColor;
-  BGColor.value = cellProp.BGColor;
+  cell.style.backgroundColor = cellProp.BGColor; // UI Change(1)
+  BGColor.value = cellProp.BGColor; // UI Change(2)
 });
 
+//Align property
 alignment.forEach((alignElem) => {
   alignElem.addEventListener( "click", (e) =>{
     let address = addressBar.value;
@@ -153,12 +159,14 @@ alignment.forEach((alignElem) => {
   })
 });
 
+//Bind event to each cell
 let allCells = document.querySelectorAll(".cell");
 for(let i = 0; i < allCells.length; i++) {
   addListenerToAttachCellProperties(allCells[i]);
 }
 
-function addListenerToAttachCellProperties(cell){
+// To apply style to cell content and to action icons accordingly
+function addListenerToAttachCellProperties(cell) {
   cell.addEventListener("click", (e)=> {
     let address = addressBar.value;
     let [rid,cid] = decodeRIDCIDFromAddress(address);
