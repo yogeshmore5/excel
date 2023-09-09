@@ -29,6 +29,9 @@ body {
   display: inline-block;
   margin-right:1rem;
 }
+.cellprop-actions-cont:hover > * {
+  cursor: pointer;
+}
 
 .cellprop-actions-cont > select {
   border:none;
