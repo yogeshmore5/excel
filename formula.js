@@ -19,8 +19,6 @@ formulaBar.addEventListener("keydown", (e) => {
 
     // If change in formula:
     //  Break old parent-child relation,
-
-
     let address = addressBar.value;
     let [cell, cellProp] = getCellAndCellProp(address);
     if(inputFormula !== cellProp.formula){
@@ -29,8 +27,9 @@ formulaBar.addEventListener("keydown", (e) => {
     //  Evaluate new formula,
     let evaluatedValue = evaluatedFormula(inputFormula);
 
+    //update cell and db(sheetDB)
+    setCellUIAndCellProp(evaluatedValue, inputFormula, address);
     //  Add new parent child relation
-    setCellUIAndCellProp(evaluatedValue, inputFormula);
     addChildToParent(inputFormula);
     console.log(sheetDB);
   }
@@ -74,8 +73,7 @@ function evaluatedFormula(formula) {
   return eval(decodedFormula);
 }
 
-function setCellUIAndCellProp(evaluatedValue, formula) {
-  let address = addressBar.value;
+function setCellUIAndCellProp(evaluatedValue, formula, address) {
   let [cell, cellProp] = getCellAndCellProp(address);
 
   //UI update
