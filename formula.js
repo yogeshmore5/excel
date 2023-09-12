@@ -31,10 +31,25 @@ formulaBar.addEventListener("keydown", (e) => {
     setCellUIAndCellProp(evaluatedValue, inputFormula, address);
     //  Add new parent child relation
     addChildToParent(inputFormula);
+    updateChildrenCells(address);
     console.log(sheetDB);
   }
 });
 
+function updateChildrenCells(parentAddress) {
+  let [parenCell, parentCellProps] = getCellAndCellProp(parentAddress);
+  let children = parentCellProps.children;
+
+  for(let i = 0; i < children.length; i++){
+    let childAddress = children[i];
+    let [childCell, childCellProps] = getCellAndCellProp(childAddress);
+    let childFormula = childCellProps.formula;
+    let evaluatedValue = evaluatedFormula(childFormula);
+    setCellUIAndCellProp(evaluatedValue, childFormula, childAddress);
+    updateChildrenCells(childAddress);
+  }
+
+}
 function addChildToParent(formula) {
   let childAddress = addressBar.value;
   let encodedFormula = formula.split(" ");
