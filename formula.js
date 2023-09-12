@@ -6,7 +6,18 @@ for(let i=0; i < rows; i++){
       let [activeCell, cellProp] = getCellAndCellProp(address);
       let enteredData = activeCell.innerText;
 
+      if( enteredData === cellProp.value ) {
+        return;
+      }
       cellProp.value = enteredData;
+
+      //Remove parent-child relation
+      removeChildFromParent(cellProp.formula);
+      //empty formula
+      cellProp.formula = "";
+      //update child with modified value
+      updateChildrenCells(address);
+
       console.log(cellProp);
     });
   }
