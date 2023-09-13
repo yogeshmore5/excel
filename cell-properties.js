@@ -184,7 +184,6 @@ function addListenerToAttachCellProperties(cell) {
     cell.style.color = cellProp.fontColor;
     cell.style.backgroundColor = cellProp.BGColor === "#000000" ? "transparent" : cellProp.BGColor;
     cell.style.textAlign = cellProp.alignment
-    //console.log('FONT --> ', cellProp.fontFamily, cellProp.fontSize);
 
     //Apply Properties to UI props container
     bold.style.backgroundColor = cellProp.bold ? activeColorProp: inactiveColorProp;
