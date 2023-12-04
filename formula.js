@@ -20,6 +20,8 @@ for(let i = 0; i < rows; i++) {
   }
 }
 
+
+
 let formulaBar = document.querySelector('.formula-bar');
 formulaBar.addEventListener("keydown", (e) => {
   let inputFormula = formulaBar.value;
@@ -31,6 +33,19 @@ formulaBar.addEventListener("keydown", (e) => {
     if(inputFormula !== cellProp.formula) {
       removeChildFromParent(cellProp.formula)
     }
+
+
+    addChildToGraphComponent(inputFormula, address);
+    //check if formula is cyclic or not then only evaluate
+    //True = Is Cyclic, False = Is Not Cyclic
+    let isCyclic = isGraphCyclic();
+    if(isCyclic == true){
+      alert("Your Formula is Cyclic");
+      removeChildFromGraphComponent(inputFormula, address)
+      return;
+    }
+
+
     //  Evaluate new formula,
     let evaluatedValue = evaluatedFormula(inputFormula);
 
@@ -42,6 +57,30 @@ formulaBar.addEventListener("keydown", (e) => {
     console.log(sheetDB);
   }
 });
+
+function removeChildFromGraphComponent(formula, childAddress) {
+  let [crid, ccid] =  decodeRIDCIDFromAddress(childAddress);
+  let encodedFormula = formula.split(" ");
+  for(let i = 0; i < encodedFormula.length; i++ ) {
+    let asciiValue = encodedFormula[i].charCodeAt(0);
+    if(asciiValue >=65 && asciiValue <= 90){
+      let [prid, pcid] = decodeRIDCIDFromAddress(encodedFormula[i]);
+      graphComponentMatrix[prid][pcid].pop()
+    }
+  }
+}
+
+function addChildToGraphComponent(formula, childAddress) {
+  let [crid, ccid] =  decodeRIDCIDFromAddress(childAddress);
+  let encodedFormula = formula.split(" ");
+  for(let i=0; i < encodedFormula.length; i++ ) {
+    let asciiValue = encodedFormula[i].charCodeAt(0);
+    if(asciiValue >=65 && asciiValue <= 90){
+      let [prid, pcid] = decodeRIDCIDFromAddress(encodedFormula[i]);
+      graphComponentMatrix[prid][pcid].push([crid, ccid])
+    }
+  }
+}
 
 function updateChildrenCells(parentAddress) {
   let [parenCell, parentCellProps] = getCellAndCellProp(parentAddress);
