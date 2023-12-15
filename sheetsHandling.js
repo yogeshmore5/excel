@@ -1,3 +1,5 @@
+let activeSheetColor = "#ced6e0";
+
 let sheetsFolderCont = document.querySelector('.sheets-folder-cont')
 let addSheetBtn = document.querySelector('.sheet-add-icon')
 addSheetBtn.addEventListener("click", (e) => {
@@ -15,13 +17,56 @@ addSheetBtn.addEventListener("click", (e) => {
   createGraphComponentMatrix();
 
   handleSheetActiveness(sheet);
+  handleSheetRemoval(sheet);
+  sheet.click();
 })
 
+function handleSheetRemoval(sheet){
+  sheet.addEventListener("mousedown", (e) => {
+    //right click
+    if(e.button !== 2) return;
+
+    let allSheetFolders = document.querySelectorAll(".sheet-folder");
+    if(allSheetFolders.length === 1){
+      alert('You need to have at least one sheet');
+      return;
+    }
+    let response = confirm('Your sheet will be removed permanently, are you sure?')
+
+    if(response === false) return;
+
+    let sheetIdx = Number(sheet.getAttribute("id"))
+    collectedSheetDB.splice(sheetIdx, 1)
+    collectedGraphComponent.splice(sheetIdx, 1)
+    handleSheetUIRemoval(sheet);
+
+    // activate 1st DB on delete
+    sheetDB = collectedSheetDB[0]
+    graphComponentMatrix = collectedGraphComponent[0]
+    handleSheetProperties()
+
+  })
+}
+
+function handleSheetUIRemoval(sheet){
+  sheet.remove()
+  let allSheetFolders = document.querySelectorAll(".sheet-folder");
+  for(let i = 0; i < allSheetFolders.length; i++) {
+    allSheetFolders[i].setAttribute("id", i);
+    let sheetContent = allSheetFolders[i].querySelector('.sheet-content')
+    sheetContent.innerText = `Sheet ${i+1}`
+    allSheetFolders[i].style.backgroundColor = 'transparent'
+
+  }
+
+  allSheetFolders[0].style.backgroundColor= activeSheetColor
+}
 function handleSheetActiveness(sheet) {
   sheet.addEventListener("click", (e) => {
     let sheetIdx = Number(sheet.getAttribute("id"))
     handleSheetDB(sheetIdx)
     handleSheetProperties();
+    handleSheetUI(sheet)
   })
 }
 
@@ -29,6 +74,14 @@ function handleSheetDB(sheetIdx) {
   sheetDB = collectedSheetDB[sheetIdx]
   graphComponentMatrix = collectedGraphComponent[sheetIdx]
 
+}
+
+function handleSheetUI(sheet){
+  let allSheetFolders = document.querySelectorAll('.sheet-folder')
+  for(let i = 0; i < allSheetFolders.length; i++) {
+    allSheetFolders[i].style.backgroundColor = "transparent"
+  }
+  sheet.style.backgroundColor = activeSheetColor
 }
 
 function handleSheetProperties(){

@@ -5,7 +5,7 @@ let sheetDB = [];
   let addSheetBtn = document.querySelector('.sheet-add-icon')
   addSheetBtn.click();
 
-  handleSheetProperties();
+  // handleSheetProperties();
 }
 /*
 for(let i = 0; i < rows; i++) {
@@ -220,6 +220,6 @@ function addListenerToAttachCellProperties(cell) {
     // Display formula in formula bar if cell has any formula
     let formulaBar = document.querySelector(".formula-bar");
     formulaBar.value = cellProp.formula;
-    cell.value = cellProp.value;
+    cell.innerText = cellProp.value;
   })
 }
