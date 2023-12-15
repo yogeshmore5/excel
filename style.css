@@ -92,20 +92,37 @@ body {
 .sheet-add-icon {
   width: 2vw;
 }
+
+.sheet-add-icon:hover {
+
+  cursor: default;
+}
 .sheets-folder-cont{
   display: flex;
   align-items: center;
   height: 80%;
   width:5rem;
   width: calc(100vw - 2vw);
+  overflow:auto;
 
 
 }
 .sheet-folder{
+  height:80%;
+  /* background-color: lightblue; */
   text-decoration: underline;
   font-weight: bold;
   text-decoration-thickness: 3px;
   font-size:0.9rem;
+  text-align: center;
+  display:flex;
+  justify-content: center;
+  align-items:center;
+}
+.sheet-content {
+  width: 5rem;
+  /* background-color: lightgreen; */
+
 }
 .grid-cont{
   height: calc(100vh - 3rem - 3rem - 3rem - 2rem );

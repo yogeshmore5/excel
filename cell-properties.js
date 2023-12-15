@@ -1,10 +1,16 @@
 //Storage
-
+let collectedSheetDB = []; //container all SheetDB
 let sheetDB = [];
+{
+  let addSheetBtn = document.querySelector('.sheet-add-icon')
+  addSheetBtn.click();
 
+  handleSheetProperties();
+}
+/*
 for(let i = 0; i < rows; i++) {
   let sheetRow = [];
-  for(let j = 0; j < cols; j++) {
+  for(let j = 0; j < cols; j++)
     let cellProp = {
       bold: false,
       italic: false,
@@ -21,7 +27,7 @@ for(let i = 0; i < rows; i++) {
     sheetRow.push(cellProp);
   }
   sheetDB.push(sheetRow);
-}
+} */
 
 //selectors for cell properties
 let bold = document.querySelector('.bold');

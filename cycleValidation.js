@@ -1,7 +1,8 @@
 //storage 2D matrix with 100 rows and 26 columns
 //This each location will contains sub-arrays which points or contains the address of other cell which has formula which uses that cell.
 //Example: IF cell B2 has formula A1 + 10 then A1 cell (row = 0,cols = 0) will contain the address of B2 which is 1,1 (row = 1 and cols = 1)
-let graphComponentMatrix = [];
+let collectedGraphComponent = [];
+/* let graphComponentMatrix = [];
 
 for(let i = 0; i < rows ; i++) {
   let row = [];
@@ -10,7 +11,7 @@ for(let i = 0; i < rows ; i++) {
     row.push([]);
   }
   graphComponentMatrix.push(row);
-}
+} */
 
 // True = Cyclic
 // False = Not Cyclic
